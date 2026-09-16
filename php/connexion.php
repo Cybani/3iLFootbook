@@ -1,35 +1,59 @@
+<?php
+require "bdd.php";
+ 
+$erreur = "";
+ 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST["email"] ?? "");
+    $mot_de_passe = $_POST["mot_de_passe"] ?? "";
+ 
+    if ($email === "" || $mot_de_passe === "") {
+        $erreur = "Merci de remplir tous les champs.";
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
+        $stmt->execute(["email" => $email]);
+        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+        if ($utilisateur && password_verify($mot_de_passe, $utilisateur["mot_de_passe"])) {
+            // Connexion réussie : on stocke les infos utiles en session
+            $_SESSION["id_utilisateur"] = $utilisateur["id_utilisateur"];
+            $_SESSION["nom"] = $utilisateur["nom"];
+            $_SESSION["prenom"] = $utilisateur["prenom"];
+            $_SESSION["role"] = $utilisateur["role"];
+ 
+            // Redirige vers la page d'accueil (à adapter selon ton projet)
+            header("Location: accueil.php");
+            exit;
+        } else {
+            $erreur = "Email ou mot de passe incorrect.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Connexion - 3ilFootbook</title>
 </head>
 <body>
-
-<section>
-        <div>
-            Connectez vous
-        </div>
-        <br>
-        <br>
-        <div>
-            <label for="email">Adresse mail</label>
-            <input type="text" placeholder="Ex : 3iLStudent@3il.fr">
-        </div>
-        <br>
-        <div>
-        <label for="mdp">Mot de passe</label>
-        <input type="text" placeholder="Ex : motdepasse123">
-        </div>
-        <br>
-        <div>
-            <button type="submit">Valider</button>
-        </div>
-        <div>
-            Pas de compte ? <a href="inscription.php">Inscrivez vous</a>
-        </div>
-    </section>
-    
+    <h1>Se connecter</h1>
+ 
+    <?php if ($erreur): ?>
+        <p style="color:red;"><?= htmlspecialchars($erreur) ?></p>
+    <?php endif; ?>
+ 
+    <form method="post">
+        <label>Email :</label><br>
+        <input type="email" name="email" required><br><br>
+ 
+        <label>Mot de passe :</label><br>
+        <input type="password" name="mot_de_passe" required><br><br>
+ 
+        <button type="submit">Se connecter</button>
+    </form>
+ 
+    <p>Pas encore de compte ? <a href="inscription.php">S'inscrire</a></p>
 </body>
 </html>
+ 
