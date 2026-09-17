@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["role"] = $utilisateur["role"];
  
             // Redirige vers la page d'accueil (à adapter selon ton projet)
-            header("Location: accueil.php");
+            header("Location: ../index.html");
             exit;
         } else {
             $erreur = "Email ou mot de passe incorrect.";
