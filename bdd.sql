@@ -14,7 +14,6 @@ CREATE TABLE terrain (
     nom VARCHAR(100) NOT NULL,
     type_surface VARCHAR(50) NOT NULL, -- Ex: Synthétique, Gazon, Futsal
     capacite INT NOT NULL, -- Ex: 10 pour un 5v5
-    prix_heure NUMERIC(5, 2) NOT NULL,
     statut_terrain VARCHAR(50) DEFAULT 'actif' NOT NULL -- actif ou maintenance
 );
 
@@ -43,10 +42,10 @@ INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role) VALUES
 ('Mbappé', 'Kylian', 'k.mbappe@user.fr', 'user123', 'user');
 
 -- Trois terrains de test
-INSERT INTO terrain (nom, type_surface, capacite, prix_heure, statut_terrain) VALUES 
-('Terrain Maracana', 'Synthétique', 10, 60.00, 'actif'),
-('Terrain Camp Nou', 'Gazon', 22, 120.00, 'actif'),
-('Terrain Futsal Arena', 'Parquet', 10, 50.00, 'maintenance');
+INSERT INTO terrain (nom, type_surface, capacite, statut_terrain) VALUES 
+('Terrain Maracana', 'Synthétique', 10, 'actif'),
+('Terrain Camp Nou', 'Gazon', 22, 'actif'),
+('Terrain Futsal Arena', 'Parquet', 10, 'maintenance');
 
 -- Une réservation de test (pour le terrain 1, par l'utilisateur 2)
 INSERT INTO reservation (id_utilisateur, id_terrain, date_reservation, heure_debut, heure_fin, statut_reservation) VALUES 
