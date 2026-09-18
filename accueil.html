@@ -25,24 +25,14 @@
       <a href="accueil.html" class="active">Accueil</a>
       <a href="apropos.html">À propos</a>
       <a href="#terrains">Nos terrains</a>
-      <a href="index.html" class="nav-cta">Connexion</a>
+      <a href="php/connexion.php" class="nav-cta">Connexion</a>
     </nav>
   </header>
 
   <!-- ===================== HERO / DIAPORAMA ===================== -->
   <section class="hero">
-    <!--
-      Diaporama d'arrière-plan.
-      Pour l'instant on utilise des dégradés "terrain" en attendant vos
-      vraies photos de stades. Pour les remplacer :
-      1. Déposez vos photos dans un dossier /images (ex: stade-1.jpg, stade-2.jpg, stade-3.jpg)
-      2. Sur chaque <div class="hero-slide ..."> ci-dessous, ajoutez :
-         style="background-image: url('images/stade-1.jpg');"
-      3. Vous pouvez ajouter autant de <div class="hero-slide"> que de photos.
-    -->
-    <div class="hero-slide secours-1 actif"></div>
-    <div class="hero-slide secours-2"></div>
-    <div class="hero-slide secours-3"></div>
+    <div class="hero-slide actif" style="background-image: url('images/accueil-1.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('images/accueil-2.jpg');"></div>
     <div class="hero-overlay"></div>
 
     <div class="hero-contenu">
@@ -58,7 +48,6 @@
     <div class="hero-points">
       <button class="actif" aria-label="Photo 1"></button>
       <button aria-label="Photo 2"></button>
-      <button aria-label="Photo 3"></button>
     </div>
   </section>
 
@@ -102,4 +91,3 @@
   <script src="js/accueil.js"></script>
 </body>
 </html>
-
