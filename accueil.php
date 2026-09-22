@@ -1,3 +1,12 @@
+<?php
+require "php/bdd.php";
+
+// Protection : si pas connecté, on renvoie vers la page de connexion
+if (!isset($_SESSION["id_utilisateur"])) {
+    header("Location: php/connexion.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,14 +24,14 @@
   <!-- ===================== NAVIGATION ===================== -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <header class="navbar">
-    <a href="accueil.html" class="logo">🏟️ 3iL <span>FootBook</span></a>
+    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
     <label for="nav-toggle" class="nav-burger">
       <span></span><span></span><span></span>
     </label>
 
     <nav class="nav-links">
-      <a href="accueil.html" class="active">Accueil</a>
+      <a href="accueil.php" class="active">Accueil</a>
       <a href="apropos.html">À propos</a>
       <a href="#terrains">Nos terrains</a>
       <a href="php/connexion.php" class="nav-cta">Connexion</a>
@@ -37,6 +46,8 @@
 
     <div class="hero-contenu">
       <span class="sur-titre">Réservé aux étudiants 3iL Limoges</span>
+      <p>[DEBUG] Tu es connecté en tant que <strong><?= htmlspecialchars($_SESSION["role"]) ?></strong>.[DEBUG]</p>
+
       <h1>Réservez votre <span>terrain de foot</span> en quelques clics</h1>
       <p>3iL FootBook, c'est la plateforme qui simplifie la réservation des terrains de sport entre étudiants. Choisissez un créneau, un terrain, et jouez.</p>
       <div class="hero-boutons">

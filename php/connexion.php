@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["role"] = $utilisateur["role"];
 
            // Redirige vers la page d'accueil
-header("Location: ../accueil.html");
+header("Location: ../accueil.php");
 exit;
         } else {
             $erreur = "Email ou mot de passe incorrect.";
@@ -46,14 +46,14 @@ exit;
     <!-- ===================== NAVIGATION ===================== -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
-        <a href="../accueil.html" class="logo">🏟️ 3iL <span>FootBook</span></a>
+        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>
 
         <nav class="nav-links">
-            <a href="../accueil.html">Accueil</a>
+            <a href="../accueil.php">Accueil</a>
             <a href="../apropos.html">À propos</a>
             <a href="../accueil.html#terrains">Nos terrains</a>
             <a href="connexion.php" class="nav-cta">Connexion</a>
