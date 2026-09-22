@@ -1,10 +1,18 @@
-<nav style="background:#1e293b; padding:15px 30px; display:flex; justify-content:space-between; align-items:center;">
-    <div style="color:white; font-weight:bold; font-size:18px;">
-        3ilFootbook
-    </div>
-    <div>
-        <a href="accueil.php" style="color:white; margin-right:20px; text-decoration:none;">Accueil</a>
-        <a href="profil.php" style="color:white; margin-right:20px; text-decoration:none;">Mon profil</a>
-        <a href="deconnexion.php" style="color:white; text-decoration:none;">Déconnexion</a>
-    </div>
-</nav>
+<link rel="stylesheet" href="../css/style.css">
+<!-- ===================== NAVIGATION ===================== -->
+<input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <header class="navbar">
+    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+
+    <label for="nav-toggle" class="nav-burger">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="nav-links">
+      <a href="accueil.php" class="active">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="#terrains">Nos terrains</a>
+      <a href="php/profil.php" style="color:white; margin-right:20px; text-decoration:none;">Profil</a>
+      <a href="php/connexion.php" class="nav-cta">Connexion</a>
+    </nav>
+  </header>

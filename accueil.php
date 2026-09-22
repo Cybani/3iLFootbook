@@ -34,6 +34,7 @@ if (!isset($_SESSION["id_utilisateur"])) {
       <a href="accueil.php" class="active">Accueil</a>
       <a href="apropos.html">À propos</a>
       <a href="#terrains">Nos terrains</a>
+      <a href="php/profil.php" style="color:white; margin-right:20px; text-decoration:none;">Profil</a>
       <a href="php/connexion.php" class="nav-cta">Connexion</a>
     </nav>
   </header>
