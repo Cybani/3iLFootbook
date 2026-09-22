@@ -43,35 +43,73 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription - 3ilFootbook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription — 3iL FootBook</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <h1>Créer un compte</h1>
 
-    <?php if ($erreur): ?>
-        <p style="color:red;"><?= htmlspecialchars($erreur) ?></p>
-    <?php endif; ?>
+    <!-- ===================== NAVIGATION ===================== -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <header class="navbar">
+        <a href="../accueil.html" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
-    <?php if ($succes): ?>
-        <p style="color:green;"><?= htmlspecialchars($succes) ?></p>
-    <?php endif; ?>
+        <label for="nav-toggle" class="nav-burger">
+            <span></span><span></span><span></span>
+        </label>
 
-    <form method="post">
-        <label>Nom :</label><br>
-        <input type="text" name="nom" required><br><br>
+        <nav class="nav-links">
+            <a href="../accueil.html">Accueil</a>
+            <a href="../apropos.html">À propos</a>
+            <a href="../accueil.html#terrains">Nos terrains</a>
+            <a href="inscription.php" class="nav-cta">Inscription</a>
+            <a href="connexion.php">Connexion</a>
+        </nav>
+    </header>
 
-        <label>Prénom :</label><br>
-        <input type="text" name="prenom" required><br><br>
+    <!-- ===================== FORMULAIRE INSCRIPTION ===================== -->
+    <section class="page-auth">
+        <div class="carte-auth">
+            <span class="sur-titre">Bienvenue</span>
+            <h1>Créer un compte</h1>
+            <p class="soustitre-auth">Rejoins 3iL FootBook pour réserver tes créneaux en quelques clics.</p>
 
-        <label>Email :</label><br>
-        <input type="email" name="email" required><br><br>
+            <?php if ($erreur): ?>
+                <div class="message-erreur"><?= htmlspecialchars($erreur) ?></div>
+            <?php endif; ?>
 
-        <label>Mot de passe :</label><br>
-        <input type="password" name="mot_de_passe" required><br><br>
+            <?php if ($succes): ?>
+                <div class="message-succes"><?= htmlspecialchars($succes) ?></div>
+            <?php endif; ?>
 
-        <button type="submit">S'inscrire</button>
-    </form>
+            <form method="post" class="formulaire-auth">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" placeholder="Dupont" required>
 
-    <p>Déjà un compte ? <a href="connexion.php">Se connecter</a></p>
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" placeholder="Camille" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="prenom.nom@3il.fr" required>
+
+                <label for="mot_de_passe">Mot de passe</label>
+                <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="••••••••" required>
+
+                <button type="submit" class="btn btn-primaire btn-auth">S'inscrire</button>
+            </form>
+
+            <p class="lien-secondaire">Déjà un compte ? <a href="connexion.php">Se connecter</a></p>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <p><strong>3iL FootBook</strong> — Projet étudiant, 3iL Limoges</p>
+        <p>Développé par Rayan, Mike, Mathias, Inès et Baptiste</p>
+    </footer>
+
 </body>
 </html>
