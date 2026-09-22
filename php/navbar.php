@@ -9,10 +9,11 @@
     </label>
 
     <nav class="nav-links">
-      <a href="accueil.php" class="active">Accueil</a>
+      <a href="../accueil.php" class="active">Accueil</a>
       <a href="apropos.html">À propos</a>
       <a href="#terrains">Nos terrains</a>
-      <a href="php/profil.php" style="color:white; margin-right:20px; text-decoration:none;">Profil</a>
-      <a href="php/connexion.php" class="nav-cta">Connexion</a>
+      <a href="profil.php" style="color:white; margin-right:20px; text-decoration:none;">Profil</a>
+      <a href="deconnexion.php">Deconnexion</a> 
+      <a href="connexion.php" class="nav-cta">Connexion</a>
     </nav>
   </header>
