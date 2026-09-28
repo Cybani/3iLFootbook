@@ -76,12 +76,32 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Mon profil - 3ilFootbook</title>
 </head>
+
 <body>
-    <?php include "navbarProfil.php"; ?>
+
+    <!-- ===================== NAVIGATION ===================== -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <header class="navbar">
+        <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+
+        <label for="nav-toggle" class="nav-burger">
+            <span></span><span></span><span></span>
+        </label>
+
+        <nav class="nav-links">
+            <a href="accueil.php">Accueil</a>
+            <a href="apropos.html">À propos</a>
+            <a href="#terrains">Nos terrains</a>
+            <a href="php/profil.php" class="nav-cta">Profil</a>
+            <a href="php/deconnexion.php">Deconnexion</a>
+            <a href="php/connexion.php">Connexion</a>
+        </nav>
+    </header>
 
     <div style="padding:30px; max-width:400px;">
         <h1>Mon profil</h1>
@@ -111,4 +131,5 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
         </form>
     </div>
 </body>
+
 </html>

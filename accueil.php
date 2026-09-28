@@ -3,25 +3,45 @@ require "php/bdd.php";
 
 // Protection : si pas connecté, on renvoie vers la page de connexion
 if (!isset($_SESSION["id_utilisateur"])) {
-    header("Location: php/connexion.php");
-    exit;
+  header("Location: php/connexion.php");
+  exit;
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3iL FootBook — Réservez votre terrain</title>
-  <meta name="description" content="3iL FootBook, la plateforme de réservation de terrains de sport réservée aux étudiants de 3iL Limoges.">
+  <meta name="description"
+    content="3iL FootBook, la plateforme de réservation de terrains de sport réservée aux étudiants de 3iL Limoges.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <?php include "php/navbar.php"; ?>
+  <!-- ===================== NAVIGATION ===================== -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <header class="navbar">
+    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+
+    <label for="nav-toggle" class="nav-burger">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="nav-links">
+      <a href="accueil.php" class="nav-cta">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="#terrains">Nos terrains</a>
+      <a href="php/profil.php">Profil</a>
+      <a href="php/deconnexion.php">Deconnexion</a>
+      <a href="php/connexion.php">Connexion</a>
+    </nav>
+  </header>
 
   <!-- ===================== HERO / DIAPORAMA ===================== -->
   <section class="hero">
@@ -34,7 +54,8 @@ if (!isset($_SESSION["id_utilisateur"])) {
       <p>[DEBUG] Tu es connecté en tant que <strong><?= htmlspecialchars($_SESSION["role"]) ?></strong>.[DEBUG]</p>
 
       <h1>Réservez votre <span>terrain de foot</span> en quelques clics</h1>
-      <p>3iL FootBook, c'est la plateforme qui simplifie la réservation des terrains de sport entre étudiants. Choisissez un créneau, un terrain, et jouez.</p>
+      <p>3iL FootBook, c'est la plateforme qui simplifie la réservation des terrains de sport entre étudiants.
+        Choisissez un créneau, un terrain, et jouez.</p>
       <div class="hero-boutons">
         <a href="#terrains" class="btn btn-primaire">Voir les terrains</a>
         <a href="apropos.html" class="btn btn-secondaire">En savoir plus</a>
@@ -86,4 +107,5 @@ if (!isset($_SESSION["id_utilisateur"])) {
 
   <script src="js/accueil.js"></script>
 </body>
+
 </html>

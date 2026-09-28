@@ -56,6 +56,7 @@ exit;
             <a href="../accueil.php">Accueil</a>
             <a href="../apropos.html">À propos</a>
             <a href="../accueil.html#terrains">Nos terrains</a>
+            <a href="inscription.php"> Inscription</a>
             <a href="connexion.php" class="nav-cta">Connexion</a>
         </nav>
     </header>
