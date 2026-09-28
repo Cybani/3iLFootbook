@@ -81,7 +81,7 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>Mon profil - 3ilFootbook</title>
 </head>
 <body>
-    <?php include "navbar.php"; ?>
+    <?php include "navbarProfil.php"; ?>
 
     <div style="padding:30px; max-width:400px;">
         <h1>Mon profil</h1>
