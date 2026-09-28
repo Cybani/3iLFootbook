@@ -5,7 +5,7 @@ CREATE TABLE utilisateur (
     prenom VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL, -- Sera haché en PHP (ex: password_hash)
-    role VARCHAR(20) DEFAULT 'user' NOT NULL
+    role SMALLINT DEFAULT 1 NOT NULL -- 0 = admin, 1 = utilisateur
 );
 
 -- 2. Table TERRAIN
@@ -38,8 +38,8 @@ CREATE TABLE reservation (
 
 -- Un admin et un utilisateur de test
 INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role) VALUES 
-('Zidane', 'Zinedine', 'admin@3ilfootbook.fr', 'admin123', 'admin'),
-('Mbappé', 'Kylian', 'k.mbappe@user.fr', 'user123', 'user');
+('Zidane', 'Zinedine', 'admin@3ilfootbook.fr', 'admin123', 0),
+('Mbappé', 'Kylian', 'k.mbappe@user.fr', 'user123', 1);
 
 -- Trois terrains de test
 INSERT INTO terrain (nom, type_surface, capacite, statut_terrain) VALUES 
