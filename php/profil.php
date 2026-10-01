@@ -99,8 +99,8 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
         </label>
 
         <nav class="nav-links">
-            <a href="accueil.php">Accueil</a>
-            <a href="apropos.html">À propos</a>
+            <a href="../accueil.php">Accueil</a>
+            <a href="../apropos.html">À propos</a>
             <a href="#terrains">Nos terrains</a>
             <a href="php/profil.php" class="nav-cta">Profil</a>
             <a href="php/deconnexion.php">Deconnexion</a>

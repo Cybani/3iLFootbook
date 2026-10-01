@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
         <p><strong>3iL FootBook</strong> — Projet étudiant, 3iL Limoges</p>
-        <p>Développé par Rayan, Mike, Mathias, Inès et Baptiste</p>
+        <p>Développé par Rayan, Mike, Matthias, Inès et Baptiste</p>
     </footer>
 
 </body>
