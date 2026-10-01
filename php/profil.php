@@ -79,8 +79,8 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>À propos — 3iL FootBook</title>
-  <meta name="description" content="Découvrez le projet 3iL FootBook et l'équipe étudiante derrière la plateforme.">
+  <title>Mon profil — 3iL FootBook</title>
+  <meta name="description" content="Modifiez vos informations personnelles sur 3iL FootBook.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -101,40 +101,55 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
         <nav class="nav-links">
             <a href="../accueil.php">Accueil</a>
             <a href="../apropos.html">À propos</a>
-            <a href="terrains.php">Nos terrains</a>
-            <a href="reservation.php">Réserver</a>
-            <a href="profil.php" class="active">Profil</a>
+            <a href="profil.php" class="nav-cta active">Profil</a>
             <a href="deconnexion.php">Déconnexion</a>
         </nav>
     </header>
 
-    <div style="padding:30px; max-width:400px;">
-        <h1>Mon profil</h1>
+    <!-- ===================== FORMULAIRE PROFIL ===================== -->
+    <section class="page-auth">
+        <div class="carte-auth">
+            <span class="sur-titre">Mon compte</span>
+            <h1>Mon profil</h1>
+            <p class="soustitre-auth">Modifie tes informations personnelles ci-dessous.</p>
 
-        <?php if ($erreur): ?>
-            <p style="color:red;"><?= htmlspecialchars($erreur) ?></p>
-        <?php endif; ?>
+            <?php if ($erreur): ?>
+                <div class="message-erreur"><?= htmlspecialchars($erreur) ?></div>
+            <?php endif; ?>
 
-        <?php if ($succes): ?>
-            <p style="color:green;"><?= htmlspecialchars($succes) ?></p>
-        <?php endif; ?>
+            <?php if ($succes): ?>
+                <div class="message-succes"><?= htmlspecialchars($succes) ?></div>
+            <?php endif; ?>
 
-        <form method="post">
-            <label>Nom :</label><br>
-            <input type="text" name="nom" value="<?= htmlspecialchars($utilisateur["nom"]) ?>" required><br><br>
+            <form method="post" class="formulaire-auth">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($utilisateur["nom"]) ?>" required>
 
-            <label>Prénom :</label><br>
-            <input type="text" name="prenom" value="<?= htmlspecialchars($utilisateur["prenom"]) ?>" required><br><br>
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($utilisateur["prenom"]) ?>" required>
 
-            <label>Email :</label><br>
-            <input type="email" name="email" value="<?= htmlspecialchars($utilisateur["email"]) ?>" required><br><br>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($utilisateur["email"]) ?>" required>
 
-            <label>Nouveau mot de passe (laisser vide pour ne pas le changer) :</label><br>
-            <input type="password" name="nouveau_mot_de_passe"><br><br>
+                <label for="nouveau_mot_de_passe">
+                    Nouveau mot de passe
+                    <span style="font-weight:400; color:var(--gris-texte); font-size:0.82rem;">(laisser vide pour ne pas changer)</span>
+                </label>
+                <input type="password" id="nouveau_mot_de_passe" name="nouveau_mot_de_passe" placeholder="••••••••">
 
-            <button type="submit">Enregistrer les modifications</button>
-        </form>
-    </div>
+                <button type="submit" class="btn btn-primaire btn-auth">Enregistrer les modifications</button>
+            </form>
+
+            <p class="lien-secondaire"><a href="deconnexion.php">Se déconnecter</a></p>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <p><strong>3iL FootBook</strong> — Projet étudiant, 3iL Limoges</p>
+        <p>Développé par Rayan, Mike, Matthias, Inès et Baptiste</p>
+    </footer>
+
 </body>
 
 </html>

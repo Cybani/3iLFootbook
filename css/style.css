@@ -630,6 +630,16 @@ ul {
   margin-bottom: 8px;
 }
 
+.message-succes {
+  background: #e8f5ee;
+  border: 1px solid #a8d5b8;
+  color: #1c6b3e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  margin-bottom: 8px;
+}
+
 .lien-secondaire {
   text-align: center;
   margin-top: 22px;
