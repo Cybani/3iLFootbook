@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <nav class="nav-links">
             <a href="../accueil.html">Accueil</a>
             <a href="../apropos.html">À propos</a>
-            <a href="../accueil.html#terrains">Nos terrains</a>
+            
             <a href="inscription.php" class="nav-cta">Inscription</a>
             <a href="connexion.php">Connexion</a>
         </nav>

@@ -21,9 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["prenom"] = $utilisateur["prenom"];
             $_SESSION["role"] = $utilisateur["role"];
 
-           // Redirige vers la page d'accueil
-header("Location: ../accueil.php");
-exit;
+            // Les administrateurs ouvrent directement la gestion des comptes.
+            if ((int)$utilisateur["role"] === 0) {
+                header("Location: gestion_utilisateurs.php");
+            } else {
+                header("Location: ../accueil.php");
+            }
+            exit;
         } else {
             $erreur = "Email ou mot de passe incorrect.";
         }
@@ -53,9 +57,9 @@ exit;
         </label>
 
         <nav class="nav-links">
-            <a href="../accueil.php">Accueil</a>
+            
             <a href="../apropos.html">À propos</a>
-            <a href="../accueil.html#terrains">Nos terrains</a>
+            
             <a href="inscription.php"> Inscription</a>
             <a href="connexion.php" class="nav-cta">Connexion</a>
         </nav>
