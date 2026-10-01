@@ -109,9 +109,10 @@ function h($valeur): string
     </label>
 
     <nav class="nav-links">
-      <a href="accueil.php" class="nav-cta">Accueil</a>
+      <a href="accueil.php" class="active">Accueil</a>
       <a href="apropos.html">À propos</a>
-      <a href="#terrains">Nos terrains</a>
+      <a href="php/terrains.php">Nos terrains</a>
+      <a href="php/reservation.php" class="nav-cta">Réserver</a>
       <a href="php/profil.php">Profil</a>
       <a href="php/deconnexion.php">Déconnexion</a>
     </nav>

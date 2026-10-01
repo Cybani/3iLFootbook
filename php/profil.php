@@ -92,7 +92,7 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
     <!-- ===================== NAVIGATION ===================== -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
-        <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
@@ -101,10 +101,10 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
         <nav class="nav-links">
             <a href="../accueil.php">Accueil</a>
             <a href="../apropos.html">À propos</a>
-            <a href="#terrains">Nos terrains</a>
-            <a href="php/profil.php" class="nav-cta">Profil</a>
-            <a href="php/deconnexion.php">Deconnexion</a>
-            <a href="php/connexion.php">Connexion</a>
+            <a href="terrains.php">Nos terrains</a>
+            <a href="reservation.php">Réserver</a>
+            <a href="profil.php" class="active">Profil</a>
+            <a href="deconnexion.php">Déconnexion</a>
         </nav>
     </header>
 

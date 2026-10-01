@@ -685,3 +685,231 @@ ul {
     display: flex;
   }
 }
+/* ===========================================================
+   Ajouts : pages Nos terrains + Réservation (Limoges)
+   =========================================================== */
+
+.message-succes {
+  background: #e7f6ec;
+  border: 1px solid #a8dcbb;
+  color: #1c6b3e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  margin-bottom: 8px;
+}
+
+/* En-tête commun Terrains / Réservation */
+.entete-page {
+  background: linear-gradient(135deg, var(--nuit), var(--vert-fonce));
+  color: var(--blanc);
+  padding: 130px 24px 60px;
+  text-align: center;
+}
+
+.entete-page .sur-titre {
+  display: inline-block;
+  background: rgba(242, 183, 5, 0.15);
+  border: 1px solid var(--or);
+  color: var(--or);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.entete-page h1 {
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+  margin-bottom: 12px;
+}
+
+.entete-page p {
+  max-width: 620px;
+  margin: 0 auto;
+  color: #dfe9e3;
+}
+
+/* Page Nos terrains — grille de cartes */
+.grille-terrains {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+}
+
+.carte-terrain {
+  background: var(--blanc);
+  border: 1px solid #e7ece9;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carte-terrain:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px var(--ombre);
+}
+
+.terrain-visuel {
+  position: relative;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.terrain-visuel.g1 { background-image: linear-gradient(135deg, #0b2f1c, #1c6b3e 55%, #2d9a5b); }
+.terrain-visuel.g2 { background-image: linear-gradient(135deg, #06261a, #124a2a 55%, #1c6b3e); }
+.terrain-visuel.g3 { background-image: linear-gradient(135deg, #10331f, #1a5c34 55%, #2d9a5b); }
+.terrain-visuel.g0 { background-image: linear-gradient(135deg, #0e2a1c, #216b41 55%, #35a869); }
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-actif { background: rgba(231, 246, 236, 0.95); color: #1c6b3e; }
+.badge-maintenance { background: rgba(253, 236, 234, 0.95); color: #b3261e; }
+
+.terrain-corps {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.terrain-corps h3 { color: var(--nuit); font-size: 1.15rem; margin-bottom: 4px; }
+
+.terrain-quartier {
+  color: var(--vert-principal);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.terrain-desc { font-size: 0.9rem; margin-bottom: 16px; flex: 1; }
+
+.terrain-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+
+.puce {
+  background: var(--gris-clair);
+  border: 1px solid #e7ece9;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+}
+
+.btn-terrain {
+  display: inline-block;
+  text-align: center;
+  background: var(--or);
+  color: var(--nuit);
+  font-weight: 600;
+  padding: 11px 18px;
+  border-radius: 8px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn-terrain:hover { background: #ffcb2b; transform: translateY(-2px); }
+
+.btn-terrain.desactive {
+  background: #e3e7e5;
+  color: #9aa39d;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Page Réservation */
+.grille-reservation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.bloc-reservation {
+  background: var(--blanc);
+  border: 1px solid #e7ece9;
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.bloc-reservation h2 { color: var(--nuit); font-size: 1.4rem; margin-bottom: 6px; }
+.bloc-reservation .intro { font-size: 0.9rem; margin-bottom: 20px; }
+
+.formulaire-auth select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d9e0dc;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--nuit);
+  background: var(--gris-clair);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.formulaire-auth select:focus {
+  outline: none;
+  border-color: var(--vert-principal);
+  background: var(--blanc);
+}
+
+.ligne-creneau { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ligne-creneau > div { display: flex; flex-direction: column; }
+
+.liste-reservations { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+.item-reservation {
+  border: 1px solid #e7ece9;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+
+.item-reservation .infos strong { color: var(--nuit); display: block; font-size: 1rem; }
+.item-reservation .infos span { font-size: 0.85rem; color: var(--gris-texte); }
+
+.btn-annuler {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f3b4ac;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-annuler:hover { background: #f9d9d5; }
+
+.aucune-reservation {
+  color: var(--gris-texte);
+  font-size: 0.9rem;
+  background: var(--gris-clair);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .grille-reservation { grid-template-columns: 1fr; }
+}
