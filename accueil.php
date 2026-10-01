@@ -102,20 +102,7 @@ function h($valeur): string
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
 
   <header class="navbar">
-    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
-
-    <label for="nav-toggle" class="nav-burger">
-      <span></span><span></span><span></span>
-    </label>
-
-    <nav class="nav-links">
-      <a href="accueil.php" class="active">Accueil</a>
-      <a href="apropos.html">À propos</a>
-      <a href="php/terrains.php">Nos terrains</a>
-      <a href="php/reservation.php" class="nav-cta">Réserver</a>
-      <a href="php/profil.php">Profil</a>
-      <a href="php/deconnexion.php">Déconnexion</a>
-    </nav>
+    <?php include 'php/navbar.php'; ?>
   </header>
 
   <section class="hero">
