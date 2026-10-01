@@ -4,9 +4,9 @@
 // -- À adapter selon ta configuration --
 $host = "localhost";
 $port = "5432";
-$dbname = "3iLFootbook"; // remplace par le nom de ta base
+$dbname = "3iLFootBook"; // remplace par le nom de ta base
 $user = "postgres";      // remplace par ton utilisateur
-$password = "0000";  // remplace par ton mot de passe
+$password = "1234";  // remplace par ton mot de passe
  
 try {
     $pdo = new PDO(

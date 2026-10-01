@@ -1,0 +1,23 @@
+3iL FOOTBOOK — APPLICATION COMPLÈTE AVEC GESTION ADMIN
+
+L'archive contient l'application complète et la page de gestion des utilisateurs.
+La page réutilise css/style.css. Aucune modification SQL n'est nécessaire.
+
+INSTALLATION SANS ÉCRASER TON DOSSIER ACTUEL
+1. Crée le dossier :
+   C:\xampp\htdocs\3iLFootbook-admin
+2. Décompresse tout le contenu de l'archive dans ce nouveau dossier.
+3. Si la configuration PostgreSQL fournie ne correspond pas à ta base locale,
+   copie ton fichier existant php/bdd.php dans :
+   C:\xampp\htdocs\3iLFootbook-admin\php\bdd.php
+   Ne partage pas le mot de passe PostgreSQL.
+4. Ne réimporte pas bdd.sql si ta base contient déjà tes utilisateurs.
+5. Dans XAMPP, démarre Apache. Démarre aussi le service PostgreSQL.
+6. Ouvre :
+   http://localhost/3iLFootbook-admin/accueil.php
+7. Connecte-toi avec un compte dont role = 0.
+
+Après connexion, le rôle 0 ouvre Gestion des utilisateurs et le rôle 1 ouvre
+l'accueil normal. La page n'affiche aucun mot de passe, vérifie le rôle côté
+serveur, empêche de retirer son propre rôle admin et empêche de rétrograder le
+dernier administrateur.
