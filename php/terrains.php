@@ -7,10 +7,10 @@ if (!isset($_SESSION["id_utilisateur"])) {
     exit;
 }
 
-// On récupère tous les terrains (les terrains actifs d'abord)
+// La disponibilité se consulte par créneau dans le planning.
 $stmt = $pdo->query(
     "SELECT * FROM terrain
-     ORDER BY (statut_terrain = 'actif') DESC, nom ASC"
+     ORDER BY nom ASC"
 );
 $terrains = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -69,15 +69,9 @@ function icone_surface($type) {
   <section class="section">
     <div class="grille-terrains">
       <?php foreach ($terrains as $t): ?>
-        <?php $enMaintenance = ($t["statut_terrain"] !== "actif"); ?>
         <article class="carte-terrain">
           <div class="terrain-visuel g<?= $t["id_terrain"] % 4 ?>">
             <?= icone_surface($t["type_surface"]) ?>
-            <?php if ($enMaintenance): ?>
-              <span class="badge badge-maintenance">Maintenance</span>
-            <?php else: ?>
-              <span class="badge badge-actif">Disponible</span>
-            <?php endif; ?>
           </div>
 
           <div class="terrain-corps">
@@ -90,11 +84,8 @@ function icone_surface($type) {
               <span class="puce"><?= (int)$t["capacite"] ?> joueurs</span>
             </div>
 
-            <?php if ($enMaintenance): ?>
-              <span class="btn-terrain desactive">Indisponible</span>
-            <?php else: ?>
-              <a href="reservation.php?terrain=<?= (int)$t["id_terrain"] ?>" class="btn-terrain">Réserver ce terrain</a>
-            <?php endif; ?>
+            <a href="../accueil.php?terrain=<?= (int)$t["id_terrain"] ?>#planning" class="btn-terrain">Voir le planning</a>
+            <a href="reservation.php?terrain=<?= (int)$t["id_terrain"] ?>" class="btn-terrain">Réserver ce terrain</a>
           </div>
         </article>
       <?php endforeach; ?>
