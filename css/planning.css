@@ -1,0 +1,97 @@
+/* Planning hebdomadaire de l'accueil. */
+#planning { scroll-margin-top: 90px; }
+.planning-section .section-tete { margin-bottom: 28px; }
+
+.planning-commandes {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 22px;
+  background: var(--gris-clair);
+  border: 1px solid #e7ece9;
+  border-radius: 14px;
+}
+.planning-periode { color: var(--nuit); font-weight: 700; margin-bottom: 12px; }
+.planning-navigation { display: flex; flex-wrap: wrap; gap: 8px; }
+.planning-navigation a,
+.planning-filtre button {
+  border: 1px solid #cddbd2;
+  border-radius: 7px;
+  padding: 8px 12px;
+  background: var(--blanc);
+  color: var(--vert-fonce);
+  font: 600 0.82rem 'Poppins', Arial, sans-serif;
+  cursor: pointer;
+}
+.planning-navigation a:hover { background: #e5f5ea; }
+.planning-filtre { flex: 1 1 270px; max-width: 340px; }
+.planning-filtre label { display: block; font-size: 0.85rem; margin-bottom: 6px; font-weight: 600; }
+.planning-filtre-champs { display: flex; gap: 8px; }
+.planning-filtre select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #cddbd2;
+  border-radius: 7px;
+  padding: 9px;
+  background: var(--blanc);
+  color: var(--nuit);
+  font: inherit;
+  font-size: 0.82rem;
+}
+.planning-filtre button { background: var(--vert-principal); color: var(--blanc); }
+.planning-filtre button:hover { background: var(--vert-fonce); }
+.planning-navigation a:focus-visible,
+.planning-filtre select:focus-visible,
+.planning-filtre button:focus-visible,
+.planning-reserver:focus-visible { outline: 3px solid var(--or); outline-offset: 3px; }
+
+.planning-legende { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0; }
+.planning-statut {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.planning-libre { background: #e5f5ea; color: #185638; }
+.planning-occupe { background: #fdecea; color: #9f271e; }
+.planning-reserver { border: 1px solid #aed1bc; }
+.planning-reserver:hover { background: #cdebd8; text-decoration: underline; }
+
+.planning-grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 24px; }
+.planning-carte { min-width: 0; border: 1px solid #dce5df; border-radius: 14px; overflow: hidden; background: var(--blanc); }
+.planning-carte-entete { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding: 20px; background: #f4f8f5; }
+.planning-carte-entete h3 { color: var(--nuit); font-size: 1.05rem; }
+.planning-carte-entete p { font-size: 0.82rem; margin-top: 4px; }
+.planning-carte-entete > .planning-statut { flex-shrink: 0; }
+.planning-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.83rem; }
+.planning-table thead { background: var(--vert-fonce); color: var(--blanc); }
+.planning-table th,
+.planning-table td { padding: 10px 12px; text-align: left; overflow-wrap: break-word; }
+.planning-table thead th { font-weight: 600; font-size: 0.78rem; }
+.planning-table thead th:first-child { width: 34%; }
+.planning-table thead th:last-child { width: 32%; }
+.planning-table tbody { border-top: 1px solid #dce5df; }
+.planning-table tbody:nth-of-type(even) { background: #fafcfb; }
+.planning-table tbody th { vertical-align: top; color: var(--nuit); font-weight: 500; }
+.planning-table tbody tr + tr td { border-top: 1px dashed #e7ece9; }
+.planning-jour-nom { display: block; font-weight: 600; }
+.planning-table time { display: block; font-size: 0.75rem; color: var(--gris-texte); }
+.planning-aujourdhui th { border-left: 4px solid var(--or); }
+.planning-repere { display: block; color: var(--vert-principal); font-size: 0.69rem; font-weight: 600; }
+.planning-passe { display: block; color: #69736d; font-size: 0.69rem; }
+.planning-note { margin-top: 20px; font-size: 0.82rem; color: var(--gris-texte); }
+.planning-accessible { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+
+@media (max-width: 600px) {
+  .planning-commandes { padding: 16px; gap: 18px; }
+  .planning-filtre { max-width: none; }
+  .planning-carte-entete { padding: 16px 12px; }
+  .planning-table th,
+  .planning-table td { padding: 10px 7px; }
+  .planning-table { font-size: 0.78rem; }
+  .planning-statut { padding: 4px 7px; font-size: 0.69rem; }
+}

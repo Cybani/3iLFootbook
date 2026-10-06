@@ -1,5 +1,6 @@
 <?php
-require "bdd.php";
+require_once "bdd.php";
+date_default_timezone_set("Europe/Paris");
 
 // Protection : réservé aux étudiants connectés
 if (!isset($_SESSION["id_utilisateur"])) {
@@ -49,15 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($debut < HEURE_OUVERTURE || $fin > HEURE_FERMETURE) {
             $erreur = "Les terrains sont ouverts de " . HEURE_OUVERTURE . " à " . HEURE_FERMETURE . ".";
         } else {
-            // Le terrain existe-t-il et est-il disponible ?
-            $stmt = $pdo->prepare("SELECT * FROM terrain WHERE id_terrain = :id");
+            // Vérifier que le terrain existe avant de contrôler le créneau.
+            $stmt = $pdo->prepare("SELECT id_terrain, nom FROM terrain WHERE id_terrain = :id");
             $stmt->execute(["id" => $id_terrain]);
             $terrain = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$terrain) {
                 $erreur = "Ce terrain n'existe pas.";
-            } elseif ($terrain["statut_terrain"] !== "actif") {
-                $erreur = "Ce terrain est en maintenance, il n'est pas réservable.";
             } else {
                 // Vérifie qu'aucune autre réservation ne chevauche ce créneau
                 $stmt = $pdo->prepare(
@@ -98,19 +97,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // ---------- Données pour l'affichage ----------
 
-// Terrains actifs pour le menu déroulant
-$terrainsActifs = $pdo->query(
-    "SELECT id_terrain, nom, quartier, type_surface, capacite
-     FROM terrain WHERE statut_terrain = 'actif' ORDER BY nom"
+// Tous les terrains peuvent être choisis ; la disponibilité dépend du créneau.
+$terrains = $pdo->query(
+    "SELECT id_terrain, nom, type_surface
+     FROM terrain ORDER BY nom"
 )->fetchAll(PDO::FETCH_ASSOC);
 
-// Terrain pré-sélectionné (depuis la page Nos terrains : reservation.php?terrain=ID)
-$terrainSelectionne = (int)($_GET["terrain"] ?? ($_POST["id_terrain"] ?? 0));
+// Préremplissage depuis les terrains ou un créneau disponible du planning.
+$terrainDepuisLien = filter_var(
+    $_GET["terrain"] ?? null,
+    FILTER_VALIDATE_INT,
+    ["options" => ["min_range" => 1]]
+) ?: 0;
+$terrainSelectionne = (int)($_POST["id_terrain"] ?? $terrainDepuisLien);
+
+$dateAujourdhui = date("Y-m-d");
+$dateDepuisLien = $_GET["date"] ?? "";
+$dateValidee = is_string($dateDepuisLien) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/D', $dateDepuisLien)
+    ? DateTimeImmutable::createFromFormat("!Y-m-d", $dateDepuisLien)
+    : false;
+if (!$dateValidee || $dateValidee->format("Y-m-d") !== $dateDepuisLien || $dateDepuisLien < $dateAujourdhui) {
+    $dateDepuisLien = $dateAujourdhui;
+}
+$dateSelectionnee = $_POST["date_reservation"] ?? $dateDepuisLien;
+
+function heureDepuisPlanning($valeur): ?string
+{
+    if (!is_string($valeur) || !preg_match('/^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/D', $valeur)) {
+        return null;
+    }
+
+    $heureComplete = strlen($valeur) === 5 ? $valeur . ":00" : $valeur;
+    if ($heureComplete < HEURE_OUVERTURE . ":00" || $heureComplete > HEURE_FERMETURE . ":00") {
+        return null;
+    }
+
+    // Conserver les secondes exactes seulement lorsqu'elles sont utiles.
+    return substr($heureComplete, 6, 2) === "00" ? substr($heureComplete, 0, 5) : $heureComplete;
+}
+
+$debutDepuisLien = heureDepuisPlanning($_GET["debut"] ?? null);
+$finDepuisLien = heureDepuisPlanning($_GET["fin"] ?? null);
+if ($debutDepuisLien === null || $finDepuisLien === null || $debutDepuisLien >= $finDepuisLien) {
+    $debutDepuisLien = "18:00";
+    $finDepuisLien = "20:00";
+}
+$debutSelectionne = $_POST["heure_debut"] ?? $debutDepuisLien;
+$finSelectionnee = $_POST["heure_fin"] ?? $finDepuisLien;
 
 // Réservations à venir de l'utilisateur
 $stmt = $pdo->prepare(
     "SELECT r.id_reservation, r.date_reservation, r.heure_debut, r.heure_fin,
-            t.nom AS terrain_nom, t.quartier
+            t.nom AS terrain_nom
      FROM reservation r
      JOIN terrain t ON t.id_terrain = r.id_terrain
      WHERE r.id_utilisateur = :uid AND r.date_reservation >= CURRENT_DATE
@@ -184,10 +222,10 @@ function h($heure) { return substr($heure, 0, 5); }
           <label for="id_terrain">Terrain</label>
           <select id="id_terrain" name="id_terrain" required>
             <option value="">— Choisir un terrain —</option>
-            <?php foreach ($terrainsActifs as $t): ?>
+            <?php foreach ($terrains as $t): ?>
               <option value="<?= (int)$t["id_terrain"] ?>"
                 <?= $t["id_terrain"] == $terrainSelectionne ? "selected" : "" ?>>
-                <?= htmlspecialchars($t["nom"]) ?> — <?= htmlspecialchars($t["quartier"]) ?> (<?= htmlspecialchars($t["type_surface"]) ?>)
+                <?= htmlspecialchars($t["nom"]) ?> (<?= htmlspecialchars($t["type_surface"]) ?>)
               </option>
             <?php endforeach; ?>
           </select>
@@ -195,20 +233,22 @@ function h($heure) { return substr($heure, 0, 5); }
           <label for="date_reservation">Date</label>
           <input type="date" id="date_reservation" name="date_reservation"
                  min="<?= date("Y-m-d") ?>"
-                 value="<?= htmlspecialchars($_POST["date_reservation"] ?? date("Y-m-d")) ?>" required>
+                 value="<?= htmlspecialchars($dateSelectionnee) ?>" required>
 
           <div class="ligne-creneau">
             <div>
               <label for="heure_debut">Heure de début</label>
               <input type="time" id="heure_debut" name="heure_debut"
                      min="<?= HEURE_OUVERTURE ?>" max="<?= HEURE_FERMETURE ?>"
-                     value="<?= htmlspecialchars($_POST["heure_debut"] ?? "18:00") ?>" required>
+                     step="<?= strlen($debutSelectionne) > 5 ? 1 : 60 ?>"
+                     value="<?= htmlspecialchars($debutSelectionne) ?>" required>
             </div>
             <div>
               <label for="heure_fin">Heure de fin</label>
               <input type="time" id="heure_fin" name="heure_fin"
                      min="<?= HEURE_OUVERTURE ?>" max="<?= HEURE_FERMETURE ?>"
-                     value="<?= htmlspecialchars($_POST["heure_fin"] ?? "20:00") ?>" required>
+                     step="<?= strlen($finSelectionnee) > 5 ? 1 : 60 ?>"
+                     value="<?= htmlspecialchars($finSelectionnee) ?>" required>
             </div>
           </div>
 
@@ -229,7 +269,6 @@ function h($heure) { return substr($heure, 0, 5); }
               <li class="item-reservation">
                 <div class="infos">
                   <strong><?= htmlspecialchars($r["terrain_nom"]) ?></strong>
-                  <span>📍 <?= htmlspecialchars($r["quartier"]) ?></span><br>
                   <span>📅 <?= date("d/m/Y", strtotime($r["date_reservation"])) ?>
                         · 🕒 <?= h($r["heure_debut"]) ?> → <?= h($r["heure_fin"]) ?></span>
                 </div>
