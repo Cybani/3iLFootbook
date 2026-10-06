@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["prenom"] = $utilisateur["prenom"];
             $_SESSION["role"] = $utilisateur["role"];
 
-            // Les administrateurs ouvrent directement la gestion des comptes.
+            // Les administrateurs arrivent sur le tableau de bord admin.
             if ((int)$utilisateur["role"] === 0) {
-                header("Location: gestion_utilisateurs.php");
+                header("Location: admin.php");
             } else {
                 header("Location: ../accueil.php");
             }

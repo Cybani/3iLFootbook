@@ -158,20 +158,7 @@ function e($value): string
     </style>
 </head>
 <body>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <header class="navbar">
-        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
-        <label for="nav-toggle" class="nav-burger">
-            <span></span><span></span><span></span>
-        </label>
-        <nav class="nav-links">
-            <a href="../accueil.php">Accueil</a>
-            <a href="../apropos.html">À propos</a>
-            <a href="../accueil.php#terrains">Nos terrains</a>
-            <a href="gestion_utilisateurs.php" class="active">Gestion utilisateurs</a>
-            <a href="deconnexion.php" class="nav-cta">Déconnexion</a>
-        </nav>
-    </header>
+    <?php $pageActiveAdmin = "users"; include __DIR__ . "/admin_navbar.php"; ?>
 
     <main class="admin-page">
         <div class="admin-top">
@@ -179,7 +166,7 @@ function e($value): string
                 <h1 class="admin-title">Gestion des utilisateurs</h1>
                 <p class="admin-intro">Consulte les comptes et gère leur rôle.</p>
             </div>
-            <a class="back-link" href="../accueil.php">← Retour à l’accueil</a>
+            <a class="back-link" href="admin.php">← Tableau de bord</a>
         </div>
 
         <section class="admin-card">

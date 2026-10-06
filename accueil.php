@@ -114,6 +114,9 @@ function h($valeur): string
       <a href="php/terrains.php">Nos terrains</a>
       <a href="php/reservation.php" class="nav-cta">Réserver</a>
       <a href="php/profil.php">Profil</a>
+      <?php if ((int)($_SESSION["role"] ?? 1) === 0): ?>
+        <a href="php/admin.php">⚙️ Admin</a>
+      <?php endif; ?>
       <a href="php/deconnexion.php">Déconnexion</a>
     </nav>
   </header>
