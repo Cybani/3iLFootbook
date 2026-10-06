@@ -92,16 +92,22 @@ $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
     <!-- ===================== NAVIGATION ===================== -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
-        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+        <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>
 
         <nav class="nav-links">
-            <a href="../accueil.php">Accueil</a>
-            <a href="../apropos.html">À propos</a>
-            <a href="profil.php" class="nav-cta active">Profil</a>
+            <a href="accueil.php">Accueil</a>
+            <a href="apropos.php">À propos</a>
+            <a href="accueil.php#planning">Planning</a>
+            <a href="terrains.php">Nos terrains</a>
+            <a href="reservation.php" class="nav-cta">Réserver</a>
+            <a href="profil.php" class="active">Profil</a>
+            <?php if ((int)($_SESSION["role"] ?? 1) === 0): ?>
+                <a href="admin.php">⚙️ Admin</a>
+            <?php endif; ?>
             <a href="deconnexion.php">Déconnexion</a>
         </nav>
     </header>

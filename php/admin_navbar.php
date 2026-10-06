@@ -16,7 +16,7 @@ $pageActiveAdmin = $pageActiveAdmin ?? "";
     <a href="gestion_utilisateurs.php" class="<?= $pageActiveAdmin === 'users' ? 'active' : '' ?>">Utilisateurs</a>
     <a href="admin_terrains.php" class="<?= $pageActiveAdmin === 'terrains' ? 'active' : '' ?>">Terrains</a>
     <a href="admin_reservations.php" class="<?= $pageActiveAdmin === 'reservations' ? 'active' : '' ?>">Réservations</a>
-    <a href="../accueil.php">Voir le site</a>
+    <a href="accueil.php">Voir le site</a>
     <a href="deconnexion.php" class="nav-cta">Déconnexion</a>
   </nav>
 </header>

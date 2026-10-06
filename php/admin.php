@@ -32,7 +32,7 @@ $pageActiveAdmin = "dashboard";
         <h1 class="admin-title">Tableau de bord</h1>
         <p class="admin-intro">Bienvenue <?= e($prenom) ?> 👋 Voici l'administration de 3iL FootBook.</p>
       </div>
-      <a class="back-link" href="../accueil.php">← Voir le site</a>
+      <a class="back-link" href="accueil.php">← Voir le site</a>
     </div>
 
     <!-- Statistiques -->

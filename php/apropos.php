@@ -1,3 +1,9 @@
+<?php
+require "bdd.php"; // démarre la session
+
+$connecte = isset($_SESSION["id_utilisateur"]);
+$estAdmin = $connecte && (int)($_SESSION["role"] ?? 1) === 0;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -22,17 +28,31 @@
     </label>
 
     <nav class="nav-links">
-      <a href="accueil.php">Accueil</a>
-      <a href="apropos.html" class="nav-cta">À propos</a>
-      <a href="accueil.html#terrains">Nos terrains</a>
-      <a href="php/connexion.php">Connexion</a>
+      <?php if ($connecte): ?>
+        <a href="accueil.php">Accueil</a>
+        <a href="apropos.php" class="active">À propos</a>
+        <a href="accueil.php#planning">Planning</a>
+        <a href="terrains.php">Nos terrains</a>
+        <a href="reservation.php" class="nav-cta">Réserver</a>
+        <a href="profil.php">Profil</a>
+        <?php if ($estAdmin): ?>
+          <a href="admin.php">⚙️ Admin</a>
+        <?php endif; ?>
+        <a href="deconnexion.php">Déconnexion</a>
+      <?php else: ?>
+        <a href="accueil.php">Accueil</a>
+        <a href="apropos.php" class="active">À propos</a>
+        <a href="accueil.php#planning">Planning</a>
+        <a href="connexion.php">Connexion</a>
+        <a href="inscription.php" class="nav-cta">Inscription</a>
+      <?php endif; ?>
     </nav>
   </header>
 
-  <!-- ===================== BANDEAU DE PAGE (avec diaporama) ===================== -->
+  <!-- ===================== BANDEAU DE PAGE ===================== -->
   <section class="bandeau-page">
-    <div class="bandeau-slide actif" style="background-image: url('images/apropos-1.jpg');"></div>
-    <div class="bandeau-slide" style="background-image: url('images/apropos-2.jpg');"></div>
+    <div class="bandeau-slide actif" style="background-image: url('../images/apropos-1.jpg');"></div>
+    <div class="bandeau-slide" style="background-image: url('../images/apropos-2.jpg');"></div>
     <div class="bandeau-overlay"></div>
 
     <div class="bandeau-contenu">
@@ -110,9 +130,9 @@
   <!-- ===================== FOOTER ===================== -->
   <footer class="footer">
     <p><strong>3iL FootBook</strong> — Projet étudiant, 3iL Limoges</p>
-    <p>Développé par Rayan, Mike, Mathias, Inès et Baptiste</p>
+    <p>Développé par Rayan, Mike, Matthias, Inès et Baptiste</p>
   </footer>
 
-  <script src="js/apropos.js"></script>
+  <script src="../js/apropos.js"></script>
 </body>
 </html>

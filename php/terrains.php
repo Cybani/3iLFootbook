@@ -42,18 +42,22 @@ function icone_surface($type) {
   <!-- ===================== NAVIGATION ===================== -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <header class="navbar">
-    <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
     <label for="nav-toggle" class="nav-burger">
       <span></span><span></span><span></span>
     </label>
 
     <nav class="nav-links">
-      <a href="../accueil.php">Accueil</a>
-      <a href="../apropos.html">À propos</a>
+      <a href="accueil.php">Accueil</a>
+      <a href="apropos.php">À propos</a>
+      <a href="accueil.php#planning">Planning</a>
       <a href="terrains.php" class="active">Nos terrains</a>
-      <a href="reservation.php">Réserver</a>
+      <a href="reservation.php" class="nav-cta">Réserver</a>
       <a href="profil.php">Profil</a>
+      <?php if ((int)($_SESSION["role"] ?? 1) === 0): ?>
+        <a href="admin.php">⚙️ Admin</a>
+      <?php endif; ?>
       <a href="deconnexion.php">Déconnexion</a>
     </nav>
   </header>
@@ -72,6 +76,11 @@ function icone_surface($type) {
         <article class="carte-terrain">
           <div class="terrain-visuel g<?= $t["id_terrain"] % 4 ?>">
             <?= icone_surface($t["type_surface"]) ?>
+            <?php if (($t["statut_terrain"] ?? "actif") === "maintenance"): ?>
+              <span class="badge badge-maintenance">En maintenance</span>
+            <?php else: ?>
+              <span class="badge badge-actif">Actif</span>
+            <?php endif; ?>
           </div>
 
           <div class="terrain-corps">
@@ -84,8 +93,12 @@ function icone_surface($type) {
               <span class="puce"><?= (int)$t["capacite"] ?> joueurs</span>
             </div>
 
-            <a href="../accueil.php?terrain=<?= (int)$t["id_terrain"] ?>#planning" class="btn-terrain">Voir le planning</a>
-            <a href="reservation.php?terrain=<?= (int)$t["id_terrain"] ?>" class="btn-terrain">Réserver ce terrain</a>
+            <a href="accueil.php?terrain=<?= (int)$t["id_terrain"] ?>#planning" class="btn-terrain">Voir le planning</a>
+            <?php if (($t["statut_terrain"] ?? "actif") === "maintenance"): ?>
+              <span class="btn-terrain desactive" title="Terrain actuellement en maintenance">En maintenance</span>
+            <?php else: ?>
+              <a href="reservation.php?terrain=<?= (int)$t["id_terrain"] ?>" class="btn-terrain">Réserver ce terrain</a>
+            <?php endif; ?>
           </div>
         </article>
       <?php endforeach; ?>

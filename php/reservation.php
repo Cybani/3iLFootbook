@@ -50,13 +50,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($debut < HEURE_OUVERTURE || $fin > HEURE_FERMETURE) {
             $erreur = "Les terrains sont ouverts de " . HEURE_OUVERTURE . " à " . HEURE_FERMETURE . ".";
         } else {
-            // Vérifier que le terrain existe avant de contrôler le créneau.
-            $stmt = $pdo->prepare("SELECT id_terrain, nom FROM terrain WHERE id_terrain = :id");
+            // Vérifier que le terrain existe et n'est pas en maintenance
+            $stmt = $pdo->prepare("SELECT id_terrain, nom, statut_terrain FROM terrain WHERE id_terrain = :id");
             $stmt->execute(["id" => $id_terrain]);
             $terrain = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$terrain) {
                 $erreur = "Ce terrain n'existe pas.";
+            } elseif (($terrain["statut_terrain"] ?? "actif") === "maintenance") {
+                $erreur = "Le terrain « " . htmlspecialchars($terrain["nom"]) . " » est actuellement en maintenance et ne peut pas être réservé.";
             } else {
                 // Vérifie qu'aucune autre réservation ne chevauche ce créneau
                 $stmt = $pdo->prepare(
@@ -97,9 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // ---------- Données pour l'affichage ----------
 
-// Tous les terrains peuvent être choisis ; la disponibilité dépend du créneau.
+// Liste des terrains avec leur statut
 $terrains = $pdo->query(
-    "SELECT id_terrain, nom, type_surface
+    "SELECT id_terrain, nom, type_surface, statut_terrain
      FROM terrain ORDER BY nom"
 )->fetchAll(PDO::FETCH_ASSOC);
 
@@ -109,6 +111,18 @@ $terrainDepuisLien = filter_var(
     FILTER_VALIDATE_INT,
     ["options" => ["min_range" => 1]]
 ) ?: 0;
+
+// Si le terrain demandé depuis le lien est en maintenance, avertir l'utilisateur
+if ($terrainDepuisLien > 0) {
+    foreach ($terrains as $t) {
+        if ((int)$t["id_terrain"] === $terrainDepuisLien && ($t["statut_terrain"] ?? "actif") === "maintenance") {
+            $erreur = "Le terrain « " . htmlspecialchars($t["nom"]) . " » est actuellement en maintenance et ne peut pas être réservé.";
+            $terrainDepuisLien = 0;
+            break;
+        }
+    }
+}
+
 $terrainSelectionne = (int)($_POST["id_terrain"] ?? $terrainDepuisLien);
 
 $dateAujourdhui = date("Y-m-d");
@@ -177,18 +191,22 @@ function h($heure) { return substr($heure, 0, 5); }
   <!-- ===================== NAVIGATION ===================== -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <header class="navbar">
-    <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+    <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
     <label for="nav-toggle" class="nav-burger">
       <span></span><span></span><span></span>
     </label>
 
     <nav class="nav-links">
-      <a href="../accueil.php">Accueil</a>
-      <a href="../apropos.html">À propos</a>
+      <a href="accueil.php">Accueil</a>
+      <a href="apropos.php">À propos</a>
+      <a href="accueil.php#planning">Planning</a>
       <a href="terrains.php">Nos terrains</a>
-      <a href="reservation.php" class="active">Réserver</a>
+      <a href="reservation.php" class="nav-cta active">Réserver</a>
       <a href="profil.php">Profil</a>
+      <?php if ((int)($_SESSION["role"] ?? 1) === 0): ?>
+        <a href="admin.php">⚙️ Admin</a>
+      <?php endif; ?>
       <a href="deconnexion.php">Déconnexion</a>
     </nav>
   </header>
@@ -223,9 +241,11 @@ function h($heure) { return substr($heure, 0, 5); }
           <select id="id_terrain" name="id_terrain" required>
             <option value="">— Choisir un terrain —</option>
             <?php foreach ($terrains as $t): ?>
+              <?php $estEnMaintenance = ($t["statut_terrain"] ?? "actif") === "maintenance"; ?>
               <option value="<?= (int)$t["id_terrain"] ?>"
-                <?= $t["id_terrain"] == $terrainSelectionne ? "selected" : "" ?>>
-                <?= htmlspecialchars($t["nom"]) ?> (<?= htmlspecialchars($t["type_surface"]) ?>)
+                <?= $t["id_terrain"] == $terrainSelectionne ? "selected" : "" ?>
+                <?= $estEnMaintenance ? "disabled" : "" ?>>
+                <?= htmlspecialchars($t["nom"]) ?> (<?= htmlspecialchars($t["type_surface"]) ?>)<?= $estEnMaintenance ? " — ⚠️ En maintenance" : "" ?>
               </option>
             <?php endforeach; ?>
           </select>
