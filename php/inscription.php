@@ -60,15 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- ===================== NAVIGATION ===================== -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
-        <a href="../accueil.html" class="logo">🏟️ 3iL <span>FootBook</span></a>
+        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>
 
         <nav class="nav-links">
-            <a href="../accueil.html">Accueil</a>
-            <a href="../apropos.html">À propos</a>
+            <a href="../accueil.php">Accueil</a>
+            <a href="../apropos.php">À propos</a>
             
             <a href="inscription.php" class="nav-cta">Inscription</a>
             <a href="connexion.php">Connexion</a>
