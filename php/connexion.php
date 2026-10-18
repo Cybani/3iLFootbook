@@ -4,11 +4,13 @@ require "bdd.php";
 $erreur = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = trim($_POST["email"] ?? "");
+    $email = strtolower(trim($_POST["email"] ?? ""));
     $mot_de_passe = $_POST["mot_de_passe"] ?? "";
 
     if ($email === "" || $mot_de_passe === "") {
         $erreur = "Merci de remplir tous les champs.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@3il.fr')) {
+        $erreur = "Utilise une adresse email valide en @3il.fr.";
     } else {
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $stmt->execute(["email" => $email]);

@@ -7,14 +7,14 @@ $succes = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = trim($_POST["nom"] ?? "");
     $prenom = trim($_POST["prenom"] ?? "");
-    $email = trim($_POST["email"] ?? "");
+    $email = strtolower(trim($_POST["email"] ?? ""));
     $mot_de_passe = $_POST["mot_de_passe"] ?? "";
 
     if ($nom === "" || $prenom === "" || $email === "" || $mot_de_passe === "") {
         $erreur = "Merci de remplir tous les champs.";
     } else {
         
-        if (!str_ends_with(strtolower($email), '@3il.fr')) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@3il.fr')) {
             $erreur = "Ce site est réservé aux étudiants de 3iL Limoges, vous ne pouvez pas vous inscrire";
             } else {
                 // Vérifie si l'email existe déjà

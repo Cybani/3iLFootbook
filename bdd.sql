@@ -41,10 +41,10 @@ CREATE TABLE reservation (
 
 -- Un admin et un utilisateur de test
 -- Mots de passe hachés avec password_hash() de PHP (bcrypt).
--- Identifiants de test : admin@3ilfootbook.fr / admin123  et  k.mbappe@user.fr / user123
+-- Identifiants de test : admin@3il.fr / admin123  et  k.mbappe@3il.fr / user123
 INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role) VALUES
-('Zidane', 'Zinedine', 'admin@3ilfootbook.fr', '$2y$10$yVskBrYA4eyi4uw4jwmAvuGiHQHgKpkXjD6/VHQd.B85Gw/SYg1nu', 0),
-('Mbappé', 'Kylian', 'k.mbappe@user.fr', '$2y$10$vu.iu5F1s5Uw6wqpjt4/murKIechJX6UStKkYBz5L6S4hb2Nf.r5C', 1);
+('Zidane', 'Zinedine', 'admin@3il.fr', '$2y$10$yVskBrYA4eyi4uw4jwmAvuGiHQHgKpkXjD6/VHQd.B85Gw/SYg1nu', 0),
+('Mbappé', 'Kylian', 'k.mbappe@3il.fr', '$2y$10$vu.iu5F1s5Uw6wqpjt4/murKIechJX6UStKkYBz5L6S4hb2Nf.r5C', 1);
 
 -- Terrains de foot à Limoges (adresses indicatives pour le projet étudiant)
 INSERT INTO terrain (nom, type_surface, capacite, quartier, adresse, description, statut_terrain) VALUES
