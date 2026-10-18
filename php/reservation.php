@@ -45,6 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $erreur = "Merci de remplir tous les champs.";
         } elseif ($date < date("Y-m-d")) {
             $erreur = "Impossible de réserver dans le passé.";
+        } elseif ($date === date("Y-m-d") && $debut <= date("H:i")) {
+            $erreur = "L'heure de début est déjà passée pour aujourd'hui.";
         } elseif ($fin <= $debut) {
             $erreur = "L'heure de fin doit être après l'heure de début.";
         } elseif ($debut < HEURE_OUVERTURE || $fin > HEURE_FERMETURE) {
