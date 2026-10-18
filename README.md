@@ -86,8 +86,8 @@ http://localhost/3iLFootBook/accueil.php
 ```
 
 👉 La page de connexion devrait être accessible, inscrivez vous ou connectez vous pour pour réserver un terrain 😄
-    En cas de problème, contactez l'administrateur du site 😉
----
+
+   En cas de problème, contactez l'administrateur du site 😉
 
 ## 👤 Fonctionnalités
 
