@@ -133,6 +133,10 @@ PostgreSQL stocke les utilisateurs, les terrains et les réservations.
 
 ---
 
+## 🤖 Utilisation de l’intelligence artificielle
+
+Notre démarche est présentée dans la [note sur l’utilisation de l’IA](https://github.com/Cybani/3iLFootbook/releases/tag/note-ia-v1)
+
 ## 👥 Projet réalisé par
 
 - ABDALLAH Ines
