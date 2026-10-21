@@ -14,14 +14,19 @@ $stmt = $pdo->query(
 );
 $terrains = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Petite aide : un emoji selon le type de surface
-function icone_surface($type) {
+// Petite aide : une photo selon le type de surface
+// Petite aide : une photo selon le type de surface
+function photo_terrain($type, $id) {
     switch (strtolower($type)) {
-        case "gazon":       return "🌿";
-        case "synthétique": return "⚽";
-        case "parquet":     return "🥅";
-        case "stabilisé":   return "🏟️";
-        default:            return "⚽";
+        case "parquet":
+        case "futsal":
+            return "../images/apropos-2.jpg"; // salle couverte
+        case "gazon":
+        case "stabilisé":
+            return "../images/accueil-1.jpg"; // grand terrain à 11
+        default:
+            // Synthétique : on alterne entre deux photos pour varier les cartes
+            return $id % 2 === 0 ? "../images/apropos-1.jpg" : "../images/accueil-2.jpg";
     }
 }
 ?>
@@ -36,6 +41,15 @@ function icone_surface($type) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Photo du terrain en haut de chaque carte */
+    .terrain-visuel.photo {
+      height: 180px;
+      background-color: #1c6b3e;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
 </head>
 <body>
 
@@ -74,8 +88,8 @@ function icone_surface($type) {
     <div class="grille-terrains">
       <?php foreach ($terrains as $t): ?>
         <article class="carte-terrain">
-          <div class="terrain-visuel g<?= $t["id_terrain"] % 4 ?>">
-            <?= icone_surface($t["type_surface"]) ?>
+          <div class="terrain-visuel photo"
+               style="background-image: url('<?= htmlspecialchars(photo_terrain($t["type_surface"], (int)$t["id_terrain"])) ?>');">
             <?php if (($t["statut_terrain"] ?? "actif") === "maintenance"): ?>
               <span class="badge badge-maintenance">En maintenance</span>
             <?php else: ?>

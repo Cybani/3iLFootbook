@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
         <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
-
+()
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>
