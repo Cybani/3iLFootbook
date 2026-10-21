@@ -13,34 +13,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($nom === "" || $prenom === "" || $email === "" || $mot_de_passe === "") {
         $erreur = "Merci de remplir tous les champs.";
     } else {
-        
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@3il.fr')) {
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)
+            || (!str_ends_with($email, '@3il.fr') && !str_ends_with($email, '@3ilfootbook.fr'))) {
             $erreur = "Ce site est réservé aux étudiants de 3iL Limoges, vous ne pouvez pas vous inscrire";
+        } else {
+            // Vérifie si l'email existe déjà
+            $stmt = $pdo->prepare("SELECT id_utilisateur FROM utilisateur WHERE email = :email");
+            $stmt->execute(["email" => $email]);
+
+            if ($stmt->fetch()) {
+                $erreur = "Un compte existe déjà avec cet email.";
             } else {
-                // Vérifie si l'email existe déjà
-                $stmt = $pdo->prepare("SELECT id_utilisateur FROM utilisateur WHERE email = :email");
-                $stmt->execute(["email" => $email]);
-
-                if ($stmt->fetch()) {
-                    $erreur = "Un compte existe déjà avec cet email.";
-                } else {
                 // On hache le mot de passe avant de l'enregistrer
-                    $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+                $hash = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
-                    $stmt = $pdo->prepare(
+                $stmt = $pdo->prepare(
                     "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
-                    VALUES (:nom, :prenom, :email, :mot_de_passe, 1)"
-                    );
-                    $stmt->execute([
+                     VALUES (:nom, :prenom, :email, :mot_de_passe, 1)"
+                );
+                $stmt->execute([
                     "nom" => $nom,
                     "prenom" => $prenom,
                     "email" => $email,
                     "mot_de_passe" => $hash
-                    ]);
+                ]);
 
-                    $succes = "Compte créé avec succès ! Tu peux maintenant te connecter.";
-                }
+                $succes = "Compte créé avec succès ! Tu peux maintenant te connecter.";
             }
+        }
     }
 }
 ?>
@@ -60,16 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- ===================== NAVIGATION ===================== -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
-        <a href="../accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
+        <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
 
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>
 
         <nav class="nav-links">
-            <a href="../accueil.php">Accueil</a>
-            <a href="../apropos.php">À propos</a>
-            
+            <a href="accueil.php">Accueil</a>
+            <a href="apropos.php">À propos</a>
             <a href="inscription.php" class="nav-cta">Inscription</a>
             <a href="connexion.php">Connexion</a>
         </nav>

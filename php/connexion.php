@@ -9,8 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($email === "" || $mot_de_passe === "") {
         $erreur = "Merci de remplir tous les champs.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@3il.fr')) {
-        $erreur = "Utilise une adresse email valide en @3il.fr.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)
+              || (!str_ends_with($email, '@3il.fr') && !str_ends_with($email, '@3ilfootbook.fr'))) {
+        $erreur = "Utilise une adresse email valide en @3il.fr ou @3ilfootbook.fr.";
     } else {
         $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $stmt->execute(["email" => $email]);
@@ -53,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <header class="navbar">
         <a href="accueil.php" class="logo">🏟️ 3iL <span>FootBook</span></a>
-()
+
         <label for="nav-toggle" class="nav-burger">
             <span></span><span></span><span></span>
         </label>

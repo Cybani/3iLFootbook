@@ -20,8 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($nom === "" || $prenom === "" || $email === "") {
         $erreur = "Le nom, le prénom et l'email sont obligatoires.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@3il.fr')) {
-        $erreur = "Utilise une adresse email valide en @3il.fr.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)
+              || (!str_ends_with($email, '@3il.fr') && !str_ends_with($email, '@3ilfootbook.fr'))) {
+        $erreur = "Utilise une adresse email valide en @3il.fr ou @3ilfootbook.fr.";
     } else {
         // Vérifie que l'email n'est pas déjà utilisé par un AUTRE utilisateur
         $stmt = $pdo->prepare(
